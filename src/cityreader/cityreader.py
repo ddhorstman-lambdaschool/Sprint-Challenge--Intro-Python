@@ -9,11 +9,12 @@ class City:
         self.name = name
         self.lat = lat
         self.lon = lon
+
     def __repr__(self):
         return f"<City: {self.name}>"
 
     def __str__(self):
-        return f"{self.name}: {self.lat},{self.lon} "
+        return f"{self.name}: ({self.lat},{self.lon})"
 
 
 # We have a collection of US cities with population over 750,000 stored in the
@@ -70,21 +71,21 @@ cities = cityreader()
 # Tucson: (32.1558,-110.8777)
 # Salt Lake City: (40.7774,-111.9301)
 try:
-    (lat1,lon1) = [float(v) for v in input("Enter lat1, lon1:").split(",")]
-    (lat2,lon2) = [float(v) for v in input("Enter lat2, lon2:").split(",")]
+    (lat1, lon1) = [float(v) for v in input("Enter lat1, lon1:").split(",")]
+    (lat2, lon2) = [float(v) for v in input("Enter lat2, lon2:").split(",")]
 except ValueError:
-    print("Error: you must specify exactly two values separated by a comma")
+    print("Invalid input. Must be exactly two numbers separated by a comma.")
     sys.exit(1)
-
-print(lat1, lon1, lat2, lon2)
 
 
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
-  # within will hold the cities that fall within the specified region
-    within = []
+    # Ensure the input order doesn't matter
+    if lat2 < lat1:
+        lat1, lat2 = lat2, lat1
+    if lon2 < lon1:
+        lon1, lon2 = lon2, lon1
 
-    # TODO Ensure that the lat and lon valuse are all floats
-    # Go through each city and check to see if it falls within
-    # the specified coordinates.
+    return [c for c in cities if lat1 < c.lat < lat2 and lon1 < c.lon < lon2]
 
-    return within
+
+for city in cityreader_stretch(lat1, lon1, lat2, lon2, cities): print(city)
