@@ -8,6 +8,7 @@ class City:
         self.name = name
         self.lat = lat
         self.lon = lon
+
     def __repr__(self):
         return f"<City: {self.name}>"
 
@@ -27,14 +28,17 @@ class City:
 #
 # Note that the first line of the CSV is header that describes the fields--this
 # should not be loaded into a City object.
+cities = []
 
-def cityreader():
+def cityreader(cities=[]):
     with open('cities.csv') as csvfile:
-        return [City(row[0], float(row[3]), float(row[4]))
-                for idx, row in enumerate(csv.reader(csvfile))if idx > 0]
+        for idx, row in enumerate(csv.reader(csvfile)):
+            if idx > 0:
+                cities.push(City(row[0], float(row[3]), float(row[4])))
+    return cities
 
 
-cities = cityreader()
+cityreader(cities)
 
 # Print the list of cities (name, lat, lon), 1 record per line.
 for c in cities:
