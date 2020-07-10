@@ -39,8 +39,8 @@ def cityreader():
 cities = cityreader()
 
 # Print the list of cities (name, lat, lon), 1 record per line.
-# for c in cities:
-#     print(c)
+for c in cities:
+    print(c)
 
 # STRETCH GOAL!
 #
@@ -86,6 +86,5 @@ def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
         lon1, lon2 = lon2, lon1
 
     return [c for c in cities if lat1 < c.lat < lat2 and lon1 < c.lon < lon2]
-
 
 for city in cityreader_stretch(lat1, lon1, lat2, lon2, cities): print(city)
