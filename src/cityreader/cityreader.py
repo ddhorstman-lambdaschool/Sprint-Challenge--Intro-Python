@@ -1,4 +1,5 @@
 import csv
+import sys
 # Create a class to hold a city location. Call the class "City". It should have
 # fields for name, lat and lon (representing latitude and longitude).
 
@@ -8,7 +9,6 @@ class City:
         self.name = name
         self.lat = lat
         self.lon = lon
-
     def __repr__(self):
         return f"<City: {self.name}>"
 
@@ -28,21 +28,18 @@ class City:
 #
 # Note that the first line of the CSV is header that describes the fields--this
 # should not be loaded into a City object.
-cities = []
 
-def cityreader(cities=[]):
+def cityreader():
     with open('cities.csv') as csvfile:
-        for idx, row in enumerate(csv.reader(csvfile)):
-            if idx > 0:
-                cities.append(City(row[0], float(row[3]), float(row[4])))
-    return cities
+        return [City(row[0], float(row[3]), float(row[4]))
+                for idx, row in enumerate(csv.reader(csvfile))if idx > 0]
 
 
-cityreader(cities)
+cities = cityreader()
 
 # Print the list of cities (name, lat, lon), 1 record per line.
-for c in cities:
-    print(c)
+# for c in cities:
+#     print(c)
 
 # STRETCH GOAL!
 #
@@ -72,8 +69,14 @@ for c in cities:
 # Phoenix: (33.5722,-112.0891)
 # Tucson: (32.1558,-110.8777)
 # Salt Lake City: (40.7774,-111.9301)
+try:
+    (lat1,lon1) = [float(v) for v in input("Enter lat1, lon1:").split(",")]
+    (lat2,lon2) = [float(v) for v in input("Enter lat2, lon2:").split(",")]
+except ValueError:
+    print("Error: you must specify exactly two values separated by a comma")
+    sys.exit(1)
 
-# TODO Get latitude and longitude values from the user
+print(lat1, lon1, lat2, lon2)
 
 
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
